@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { Sequelize, Model, DataTypes } = require('sequelize')
+const { Sequelize, QueryTypes, Model, DataTypes } = require('sequelize')
 const express = require('express')
 const app = express()
 
