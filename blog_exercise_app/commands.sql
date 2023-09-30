@@ -18,3 +18,18 @@ insert into blogs (author, url, title) values (
     'kissa is best'
 );
 
+insert into users (username, name) values (
+    'mila',
+    'mm'
+);
+
+insert into users (username, name) values (
+    'Kikii',
+    'kk'
+);
+
+
+insert into users (username, name) values (
+    'zakk',
+    'zz'
+);
