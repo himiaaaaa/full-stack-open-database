@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const router = require('express').Router()
+const { sequelize } = require('../util/db')
 
 const { Blog, User } = require('../models')
 const { SECRET } = require('../util/config')
@@ -25,12 +26,17 @@ router.get('/', async(req, res) => {
     }
 
     const blogs = await Blog.findAll({
-        attributes: { exclude: ['userId']},
+        attributes: { 
+            exclude: ['userId']   
+        },
         include: {
             model: User,
             attributes: ['name']
         },
-        where
+        where,
+        order: [
+            [sequelize.literal('likes'), 'DESC']
+        ]
     })
     console.log(JSON.stringify(blogs, null, 2))
     res.json(blogs)
