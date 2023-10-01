@@ -1,9 +1,14 @@
 const router = require('express').Router()
 
-const { User } = require('../models')
+const { User, Blog } = require('../models')
 
 router.get('/', async(req, res) => {
-    const users = await User.findAll()
+    const users = await User.findAll({
+        include: {
+            model: Blog,
+            attributes: { exclude: ['userId'] } 
+        }
+    })
     console.log(JSON.stringify(users, null, 2))
     res.json(users)
 })
@@ -29,7 +34,7 @@ router.put('/:username', async(req, res) => {
     } else {
         res.status(400).end()
     }
-        
+       
 })
 
 module.exports = router
