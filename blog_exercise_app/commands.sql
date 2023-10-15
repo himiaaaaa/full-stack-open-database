@@ -19,17 +19,31 @@ insert into blogs (author, url, title) values (
 );
 
 insert into users (username, name) values (
-    'mila',
+    'milaaa@gmail.com',
     'mm'
 );
 
 insert into users (username, name) values (
-    'Kikii',
+    'Kikiiii@gmail.com',
     'kk'
 );
 
 
 insert into users (username, name) values (
-    'zakk',
+    'zakkasas@gmail.com',
     'zz'
+);
+
+insert into blogs (author, url, title, user_id) values (
+    'mila',
+    'http://mila.com',
+    'mila is great',
+    1
+);
+
+insert into blogs (author, url, title, user_id) values (
+    'kissa',
+    'http://kissa.com',
+    'kissa is best',
+    2
 );

@@ -22,19 +22,10 @@ User.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: sequelize.fn('NOW'),
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: sequelize.fn('NOW'),
-    },
-    
 }, {
     sequelize,
     underscored: true,
-    timestamps: true,
+    timestamps: false,
     modelName: 'user'
 })
 
