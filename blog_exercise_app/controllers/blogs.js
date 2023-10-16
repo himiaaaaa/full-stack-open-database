@@ -87,6 +87,15 @@ router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
 router.put('/:id', blogFinder, async (req, res) => {
     if(req.blog){
         req.blog.likes = req.body.likes
+
+        if(req.body.year) {
+
+            if(req.body.year < 1991 || req.body.year > new Date().getFullYear()) {
+                return res.status(401).json({ error: 'Year must be between 1991 and current year' });
+            }
+            req.blog.year = req.body.year; 
+        }
+
         await req.blog.save()
         res.json(req.blog)
     } else {
