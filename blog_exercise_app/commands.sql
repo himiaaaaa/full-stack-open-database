@@ -47,3 +47,20 @@ insert into blogs (author, url, title, user_id) values (
     'kissa is best',
     2
 );
+
+insert into blogs (author, url, title, user_id) values (
+    'koira',
+    'http://koira.com',
+    'koira is the best',
+    2
+);
+
+insert into blogs (author, url, title, user_id) values (
+    'tree',
+    'http://tree.com',
+    'tree is the best',
+    2
+);
+
+insert into user_blogs (user_id, blog_id, read_state) values (1, 3, false);
+insert into user_blogs (user_id, blog_id, read_state) values (1, 4, false);
