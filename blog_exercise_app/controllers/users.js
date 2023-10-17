@@ -1,10 +1,36 @@
 const router = require('express').Router()
 
-const { User, Blog, UserBlogs } = require('../models')
+const { User, Blog } = require('../models')
 
 router.get('/', async(req, res) => {
     try {
         const users = await User.findAll({
+            include: [
+            {
+                model: Blog,
+                attributes: { exclude: ['userId'] } 
+            }, 
+            {
+                model: Blog,
+                as: 'marked_blogs',
+                attributes: { exclude: ['userId'] },
+                through: {
+                    attributes: ['readState']
+                }
+            }
+          ]
+    })
+        console.log(JSON.stringify(users, null, 2))
+        res.json(users)
+    } catch(error) {
+        return res.status(400).json({ error: "fail to get users" })
+    }  
+    
+})
+
+router.get('/:id', async(req, res) => {
+    try {
+        const users = await User.findByPk(req.params.id, {
             include: [
             {
                 model: Blog,

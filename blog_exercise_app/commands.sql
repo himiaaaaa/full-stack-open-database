@@ -61,6 +61,7 @@ insert into blogs (author, url, title, user_id) values (
     'tree is the best',
     2
 );
-
-insert into user_blogs (user_id, blog_id, read_state) values (1, 3, false);
-insert into user_blogs (user_id, blog_id, read_state) values (1, 4, false);
+ 
+insert into reading_lists (user_id, blog_id, read_state) values (1, 3, false);
+insert into reading_lists (user_id, blog_id, read_state) values (1, 4, false);
+insert into reading_lists (user_id, blog_id) values (2, 1);
