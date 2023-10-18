@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const router = require('express').Router()
 const { sequelize } = require('../util/db')
 
-const { Blog, User } = require('../models')
+const { Blog, User, Session } = require('../models')
 const { SECRET } = require('../util/config')
 const { Op } = require('sequelize')
 
@@ -42,11 +42,23 @@ router.get('/', async(req, res) => {
     res.json(blogs)
 })
 
-const tokenExtractor = (req, res, next) => {
+const tokenExtractor = async (req, res, next) => {
     const authorization = req.get('authorization')
     if(authorization && authorization.toLowerCase().startsWith('bearer ')){
         try {
             req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
+
+            const session = await Session.findOne({
+                where: { 
+                    userId: req.decodedToken.id, 
+                    token: authorization.substring(7) 
+                }
+              })
+
+              if(!session) {
+                return res.status(400).json({ error: 'Session expired!'})
+              }
+              
         } catch {
             return res.status(401).json({ error: 'token invalid' })
         }

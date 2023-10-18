@@ -45,6 +45,20 @@ router.get('/', async(req, res) => {
       ]
     })
     res.json(users)
+
+    const jamiUsers = User.scope({ method: ['name', '%jami%'] }).findAll()
+    console.log(JSON.stringify(jamiUsers, null, 2))
+
+    const jami = await User.findOne({ name: 'Jami Kousa'})
+    const cnt = await jami.number_of_notes()    
+    console.log(`Jami has created ${cnt} notes`)
+
+    const twoNoteUsers = await User.with_notes(2)
+    console.log(JSON.stringify(twoNoteUsers, null, 2))
+    twoNoteUsers.forEach(u => {
+        console.log(u.name)
+    })
+
 })
 
 router.post('/', async(req, res) => {
@@ -86,11 +100,18 @@ router.get('/:id', async(req, res) => {
     })
 
 
-    if(user){
-        res.json(user)
-    } else {
-        res.status(400).end()
+    if(!user){
+        return res.status(400).end()
+    } 
+
+    let teams = undefined
+    if (req.query.teams) {
+        teams = await user.getTeam({
+            attributes: ['name'],
+            joinTableAttributes: []
+        })
     }
+    res.json({ ...user.toJSON(), teams })
 })
 
 module.exports = router
